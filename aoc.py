@@ -5,7 +5,7 @@ import os
 import stat
 
 headers = {
-    'User-Agent': 'AoC grabber github.com/msturm/aoc2023',
+    'User-Agent': 'AoC grabber github.com/msturm/aoc2024',
     'From': 'msturm@wolkje.net'  # This is another valid field
 }
 
@@ -18,7 +18,7 @@ with open('session.txt','r') as f:
     session = f.read().strip()
 
 print(session)
-year = 2023
+year = 2024
 day = sys.argv[1]
 
 if os.path.exists('./' + str(day)):
