@@ -26,9 +26,9 @@ for r in range(len(G)):
         if G[r][c] == 'X':
             for o in offsets:
                 word = G[r][c]
-                for i in range(3):
-                    rr = r + o[i][0]
-                    cc = c + o[i][1]
+                for rd, cd in o:
+                    rr = r + rd
+                    cc = c + cd
                     if rr < 0 or cc < 0 or rr >= len(G) or cc >= len(G[0]):
                         break
                     word += G[rr][cc]
