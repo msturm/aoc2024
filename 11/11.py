@@ -10,7 +10,7 @@ for v in input:
         N.append(x)
 
 
-for x in range(25):
+for x in range(35):
     NN = deque()
     for _ in range(len(N)):
         n = N.pop() 
@@ -22,7 +22,8 @@ for x in range(25):
         else:
             NN.appendleft(str(int(n) * 2024))
     N = NN
-    print(N)
+    #print(N)
+    print(len(N))
 
 p1 = len(N)
 print("p1", p1)
