@@ -9,21 +9,31 @@ for v in input:
     for x in v.split():
         N.append(x)
 
-
-for x in range(35):
-    NN = deque()
-    for _ in range(len(N)):
-        n = N.pop() 
-        if n == '0':
-            NN.appendleft('1') 
-        elif len(n)%2 == 0: # odd number
-            NN.appendleft(str(int(n[len(n)//2:])))
-            NN.appendleft(str(int(n[0:len(n)//2])))
-        else:
-            NN.appendleft(str(int(n) * 2024))
-    N = NN
-    #print(N)
-    print(len(N))
-
-p1 = len(N)
+CACHE = {}
+def count_items(x, t):
+    if (x, t) in CACHE:
+        return CACHE[(x, t)]
+    if t == 0:
+        return 1
+    elif x == 0:
+        result = count_items(1, t-1)
+        CACHE[(x, t)] = result
+    elif len(str(x))%2==0:
+        str_x = str(x)
+        result = count_items(int(str_x[:len(str_x)//2]), t-1) + count_items(int(str_x[len(str_x)//2:]), t-1)   
+        CACHE[(x, t)] = result
+    else:
+        result = count_items(x*2024, t-1)
+    CACHE[(x, t)] = result
+    return result
+    
+    
+t= 25
+p1 = 0
+N = [int(x) for x in input[0].split()]
+for x in N: 
+    p1 += count_items(x, t) 
+    #print(count_items(x, t), x, t)
+p2 = sum([count_items(x, 75) for x in N])
 print("p1", p1)
+print("p2", p2)
