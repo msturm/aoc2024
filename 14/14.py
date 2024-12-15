@@ -22,9 +22,30 @@ def print_picture(N, s):
         print('')    
     print('')
 
+def calc_p1(N):
+    q1 = [(0,0),(((R-1)//2), ((C-1)//2))]
+    q2 = [(0, (((C-1)//2)+1)), (((R-1)//2),C)]
+    q3 = [(((R-1)//2)+1,0), (R,((C-1)//2))]
+    q4 = [(((R-1)//2)+1,(((C-1)//2)+1)), (R, C)]
+    #print(q1, q2, q3, q4)
+    Q = [q1, q2, q3, q4]
+    p1 = 1
+    for q in Q:
+        minr, minc = q[0]
+        maxr, maxc = q[1]
+        qcount = 0
+        for n in NN:
+            r, c = n
+            if minr <= r < maxr and minc <= c < maxc:
+                qcount += 1
+        p1 *= qcount
+    print(p1) 
+    return p1
+
 #R = 7
 #C = 11
 picture_count = 0
+p1 = 0
 for v in input:
     p, v = v.split(' ')
     c, r = [int(x) for x in p[2:].split(',')]
@@ -42,29 +63,15 @@ for t in range(20000):
         NN.append((rr, cc))
     N = NN
     # i see a picture at 7846 (but that is 7847 seconds)
+    if t == 99:
+        p1 = calc_p1(N)
+
     if 7830 < t < 7860: 
         picture_count += 1
         print_picture(N, t)
     
    # print(t, N)  
         
-q1 = [(0,0),(((R-1)//2), ((C-1)//2))]
-q2 = [(0, (((C-1)//2)+1)), (((R-1)//2),C)]
-q3 = [(((R-1)//2)+1,0), (R,((C-1)//2))]
-q4 = [(((R-1)//2)+1,(((C-1)//2)+1)), (R, C)]
-#print(q1, q2, q3, q4)
-Q = [q1, q2, q3, q4]
-p1 = 1
-for q in Q:
-    minr, minc = q[0]
-    maxr, maxc = q[1]
-    qcount = 0
-    for n in NN:
-        r, c = n
-        if minr <= r < maxr and minc <= c < maxc:
-            qcount += 1
-    p1 *= qcount
-
-print(p1) 
+print("p1", p1)
     
 
