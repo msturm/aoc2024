@@ -23,11 +23,12 @@ class bcolors:
     OKBLUE = '\033[94m'
     OKCYAN = '\033[96m'
     OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
+    WARNING = '\033[91m'
+    FAIL = '\033[93m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m' 
+    CLEAR = '\033[H'
 
 def calculate_G(grid):
     G = dict()
@@ -122,12 +123,17 @@ def move(r, c, robot, d, G):
     return G, robot   
 
 def printgrid(G, m='', step = 0, moves=[]):
-    os.system('clear')
+    #os.system('clear')
+    print(bcolors.CLEAR)
     for r in range(R):
         for c in range(C):
             if (r, c) in G:
                 if G[(r,c)] == '@':
-                    print(bcolors.OKBLUE + bcolors.BOLD +  G[(r, c)] + bcolors.ENDC,end='')
+                    print(bcolors.BOLD + bcolors.OKBLUE +  G[(r, c)] + bcolors.ENDC,end='')
+                elif G[(r,c)] == '#':
+                    print(bcolors.BOLD + bcolors.WARNING +  G[(r, c)] + bcolors.ENDC,end='')
+                elif G[(r,c)] in ['O','[',']']:
+                    print(bcolors.BOLD + bcolors.OKCYAN + G[(r, c)] + bcolors.ENDC,end='')
                 else:
                     print(G[(r, c)], end='')
             else:
@@ -138,7 +144,7 @@ def printgrid(G, m='', step = 0, moves=[]):
     print(bcolors.BOLD + 'number of steps:' + bcolors.ENDC, step, 'of', str(len(moves)))
     print(str(moves[max(0,step-10):step]) + bcolors.BOLD + bcolors.OKGREEN + str(moves[step:step+1]) + bcolors.ENDC + str(moves[step+1:max(step+10,10)]))
                    
-    time.sleep(0.2)
+    #time.sleep(0.1)
 
 moves = ''.join(moves.split("\n"))
 G, robot = calculate_G(grid)
@@ -156,6 +162,9 @@ for (r, c), v in G.items():
         p1 += gps
 
 # part 2
+print('\033c')
+print('\033[?25l', end="")
+
 C = C*2
 p2grid = calculate_p2_grid(grid)
 G, robot = calculate_G(p2grid)
@@ -179,3 +188,4 @@ for (r, c), v in G.items():
         p2 += gps
 print('p1', p1)
 print('p2',p2)
+print('\033[?25h', end="")
