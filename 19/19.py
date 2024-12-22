@@ -45,10 +45,12 @@ for t in T:
     print(t)
 #    if not None == prog.fullmatch(t):
     curval = is_valid(t)
+    if curval > 0:
+        p1 += 1
     p2 += curval 
     print(t, curval)
     #    p1+=1
 
-        #print('p1',p1)
+print('p1',p1)
 print('p2',p2)
 
