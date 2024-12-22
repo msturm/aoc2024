@@ -37,6 +37,6 @@ if not os.path.exists('./' + day + '/'+ day + '.in'):
 
 if not os.path.exists('./' + day + '/'+ day + '.py'):
     pythonfile = str(day) + '.py'
-    open(pythonfile, 'w').write("#!/usr/bin/env python3\nfile1 = '" + str(day) + ".in'\n\n" + "input = [x.strip() for x in open(file1, 'r').readlines()]\nfor v in input:\n")
+    open(pythonfile, 'w').write("#!/usr/bin/env python3\nimport re\nfrom collections import defaultdict\nfrom collections import deque\n\ndef nums(v):\n\treturn [int(x) for x in re.findall(\"\d+\",v)]\n\nD = [(-1,0), (0, 1), (1, 0), (0,-1)]\n\nfile1 = '" + str(day) + ".in'\n\n" + "input = [x.strip() for x in open(file1, 'r').readlines()]\nfor v in input:\n")
     s = os.stat(pythonfile)
     os.chmod(pythonfile, s.st_mode | stat.S_IEXEC)
