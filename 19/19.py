@@ -17,7 +17,7 @@ patterns, target = input.split("\n\n")
 P = patterns.split(', ')
 T = target.split("\n")
 regex = "|".join(P)
-print(regex)
+#print(regex)
 prog = re.compile('(' + regex + ')+')
 
 
@@ -26,21 +26,29 @@ def is_valid(v):
 #    print(v)
     if v in DP:
         return DP[v]
+    ans = 0 
     if len(v) == 0:
-        return True
+        DP[v] = 1 
+        return  1 
     for p in P:
-        if v.startswith(p) and is_valid(v[len(p):]):
-            DP[v] = True
-            return True
-    DP[v] = False
-    return False
+        if v.startswith(p):
+            ans += is_valid(v[len(p):])
+            DP[v] = ans
+    return ans 
+
+            
+
 
 p1 = 0
+p2 = 0
 for t in T:
     print(t)
 #    if not None == prog.fullmatch(t):
-    if is_valid(t):
-        print(t)
-        p1+=1
+    curval = is_valid(t)
+    p2 += curval 
+    print(t, curval)
+    #    p1+=1
 
-print('p1',p1)
+        #print('p1',p1)
+print('p2',p2)
+
