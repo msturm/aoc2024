@@ -24,16 +24,58 @@ def calc_nextnumber(v, steps=1):
         nv3 = nv2 ^ nv3
         nv3 = nv3 % 16777216
         ov = nv3
-    print(v, ':', nv3)
+#    print(v, ':', nv3)
     return nv3
 
 
+def calc_changes(v, steps=2000):
+    ov = v
+    prev = v%10 
+    last_four_changes = [0,0,0,0]
+    result = {}
+    for x in range(steps):
+        last_four_changes.append((ov%10)-prev)
+        last_four_changes = last_four_changes[1:]
+            
+        #print(ov, ':', ov%10, (ov%10)-prev)
+        #print(x, last_four_changes)
+        if x > 4:
+            if tuple(last_four_changes) not in result:
+                result[tuple(last_four_changes)] = ov%10 
+
+        prev = ov%10
+        nv = ov * 64 
+        nv = ov ^ nv
+        nv = nv % 16777216
+        nv2 = nv // 32
+        nv2 = nv ^ nv2
+        nv2 = nv2 % 16777216
+        nv3 = nv2 * 2048
+        nv3 = nv2 ^ nv3
+        nv3 = nv3 % 16777216
+        ov = nv3
+    key = max(result, key=result.get) 
+    return result
+    
+def merge_dicts(v, w):
+    for key, value in w.items():
+        v[key] += value
+    return v
+
+
+#print(calc_changes(123,10))
+#exit(1)
 input = [x.strip() for x in open(file1, 'r').readlines()]
 p1 = 0
+p2_dict = defaultdict(int)
 for v in input:
     p1 += calc_nextnumber(int(v), 2000)
+    p2_dict = merge_dicts(p2_dict, calc_changes(int(v), 2000))
     
-print(p1)    
+key = max(p2_dict, key=p2_dict.get)
+p2 = max(p2_dict.values())
+print('p1', p1)    
+print('p2', p2)    
     
     
 
